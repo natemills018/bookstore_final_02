@@ -57,7 +57,7 @@ router.put('/:id', tokenCheck, async(req, res) => {
     }
 })
 
-router.post('/id', tokenCheck, async(req, res) => {
+router.post('/id', async(req, res) => {
     try {
         const {title, price, author, category_id} = req.body
 
