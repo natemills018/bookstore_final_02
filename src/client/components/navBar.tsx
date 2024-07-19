@@ -23,11 +23,11 @@ const NavBar = (props: navbarProps) => {
 				
 				
 				
-				{/* <button onClick={() => {
+				<button onClick={() => {
   						localStorage.removeItem(TOKEN_KEY);
   						window.location.href = "/login";
 						}} className="btn btn-dark">Logout</button>
-               */}
+              
 				
 			</div>
     )

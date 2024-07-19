@@ -26,11 +26,11 @@ const App = (props: AppProps) => {
         />
         <Route
           path="/books"
-          element={<Books />}
+          element={<PrivateRoute><Books /></PrivateRoute>}
         />
         <Route
          path="/books/:id"
-         element={<BookDetails />} 
+         element={<PrivateRoute><BookDetails /></PrivateRoute>} 
          />
          <Route
          path="/books/new"
@@ -42,7 +42,7 @@ const App = (props: AppProps) => {
          />
          <Route
          path="/categories"
-         element={<Categories/>}
+         element={<PrivateRoute><Categories/></PrivateRoute>}
          />
          <Route 
          path="/login"
