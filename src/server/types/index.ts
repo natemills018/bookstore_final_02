@@ -14,6 +14,11 @@ export interface Category {
     name: string;
 }
 
+export interface MySqlResponse {
+    affectedRows: number;
+    insertId: number;
+}
+
 export interface Book extends NewBook {
     id: number;
     created_at: Date;
