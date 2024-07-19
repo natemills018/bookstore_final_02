@@ -45,7 +45,7 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-router.put('/:id', async(req, res) => {
+router.put('/:id', tokenCheck, async(req, res) => {
     try {
         const id = parseInt(req.params.id, 10)
         const updatedBook = req.body;
@@ -57,7 +57,7 @@ router.put('/:id', async(req, res) => {
     }
 })
 
-router.post('/', async(req, res) => {
+router.post('/', tokenCheck, async(req, res) => {
     try {
         const {title, price, author, category_id} = req.body
 

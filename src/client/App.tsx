@@ -9,6 +9,8 @@ import AddBook from "./views/AddBook";
 import Categories from "./views/Categories";
 import Login from "./views/Login";
 import Register from "./views/Register";
+import UpdateBook from "./views/UpdateBook";
+import PrivateRoute from "./views/PrivateWrapper";
 
 interface AppProps {}
 
@@ -32,7 +34,11 @@ const App = (props: AppProps) => {
          />
          <Route
          path="/books/new"
-         element={<AddBook />} 
+         element={<PrivateRoute><AddBook /></PrivateRoute>} 
+         />
+         <Route 
+         path="/books/:id/update"
+         element={<PrivateRoute><UpdateBook /></PrivateRoute>}
          />
          <Route
          path="/categories"

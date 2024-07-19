@@ -1,53 +1,124 @@
-import React, { useState } from "react";
-import { POST, TOKEN_KEY } from "../services/fetcher";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { GET, PUT, DELETE } from "../services/fetcher";
+import { useNavigate, useParams } from "react-router-dom";
+import { Book, Category } from "../types";
 
-const Register = () => {
-  const nav = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+interface UpdateProps {}
 
-  const handleRegister = () => {
-    const url = "/auth/register";
-    POST(url, { email, password }).then((data) => {
-      console.log(data);
-      localStorage.setItem(TOKEN_KEY, data.token);
-      alert("You registered!");
-      nav("/login");
+const UpdateBook = (props: UpdateProps) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [author, setAuthor] = useState("");
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState(0);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [selectCatId, setSelectCatId] = useState(0);
+
+  useEffect(() => {
+    GET<Book>(`/api/books/${id}`).then((book) => {
+      setTitle(book.title);
+      setAuthor(book.author);
+      setPrice(book.price);
+      setSelectCatId(book.category_id);
+    });
+
+    console.log("This is the useEffect updateBook");
+
+    console.log(id);
+
+    GET("/api/categories").then((categories) => setCategories(categories));
+  }, []);
+
+  const handleButton = () => {
+    const url = `/api/books/`;
+
+    console.log(url + id);
+    PUT(url + id, { author, title, price, category_id: selectCatId }).then(
+      (book) => {
+        navigate(`/books/${id}`);
+      }
+    );
+  };
+
+  const handleDelete = () => {
+    DELETE("/api/books/" + id).then((data) => {
+      alert(data.message);
+      navigate('/books')
     });
   };
-  return (
-    <div className="card-body">
-      <div>
-        <h1 className="d-flex justify-content-center">Register Here!</h1>
 
-        <div className="d-flex justify-content-center m-2">
-          <input
-            className="m-2"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            className="m-2"
-            placeholder="Password"
-            // type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+  console.log({ title, author, price, selectCatId });
+
+  return (
+    <main className="container mt-5">
+      <section className="row justify-content-center">
+        <div className="col-12 col-md-6">
+          <div className="card-body">
+            <div>
+              <h1 className="d-flex justify-content-center">
+                Updating Book#{id}!
+              </h1>
+
+              <div className="d-flex justify-content-center m-2">
+                <input
+                  className="m-2"
+                  placeholder="Author"
+                  value={author}
+                  onChange={(e) => setAuthor(e.target.value)}
+                />
+                <input
+                  className="m-2"
+                  placeholder="Title"
+                  nonce=""
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
+              <input
+                className="m-2"
+                placeholder="Price"
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(Number(e.target.value))}
+              />
+
+              <select
+                value={selectCatId}
+                onChange={(e) => setSelectCatId(Number(e.target.value))}
+              >
+                <option value={0}>Pick a Category</option>
+                {categories.map((cat) => (
+                  <option
+                    key={`categories-${cat.id}`}
+                    value={cat.id}
+                  >
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+
+              <div className="d-flex justify-content-center m-2">
+                <button
+                  className="rounded mx-4"
+                  onClick={handleButton}
+                >
+                  Click to Update your Book!
+                </button>
+              </div>
+              <div className="d-flex justify-content-center m-2">
+                <button
+                  className="rounded mx-4"
+                  onClick={handleDelete}
+                >
+                  Delete this Book!
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="d-flex justify-content-center m-2">
-          <button
-            className="rounded mx-4"
-            onClick={handleRegister}
-          >
-            {" "}
-            Register
-          </button>
-        </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 
-export default Register;
+export default UpdateBook;
