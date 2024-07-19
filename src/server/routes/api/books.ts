@@ -45,7 +45,7 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-router.put('/:id', tokenCheck, async(req, res) => {
+router.put('/:id', async(req, res) => {
     try {
         const id = parseInt(req.params.id, 10)
         const updatedBook = req.body;
@@ -57,7 +57,7 @@ router.put('/:id', tokenCheck, async(req, res) => {
     }
 })
 
-router.post('/id', async(req, res) => {
+router.post('/', async(req, res) => {
     try {
         const {title, price, author, category_id} = req.body
 
@@ -65,7 +65,9 @@ router.post('/id', async(req, res) => {
             return res.status(400).json({ message: 'You must be missing one of the required properties'})
         }
         const results = await db.books.addBook({ title, price, author, category_id})
-        res.status(201).json({ message: 'Yes! We added your book to the bookstore'})
+    
+        res.status(201).json({ message: 'Yes! We added your book!', id: results.insertId})
+        console.log(results)
     } catch (error) {
         console.log(error)
         res.status(500).json({message: 'Internal Server error, could not add book', error})
