@@ -10,9 +10,9 @@ const router = Router();
 router.post('/', async (req, res) => {
     try {
         const { email, password } = req.body;
-        // const hashed = await bcrypt.hash(password,12)
+        const hashed = await bcrypt.hash(password,12)
 
-        const results = await db.users.register({ email, password})
+        const results = await db.users.register({ email, password: hashed})
         
         const token = jwt.sign({ id: results.insertId, email}, config.jwt.secret, {expiresIn: config.jwt.expiration})
         res.status(201).json({message: 'You have registered successfully', token})

@@ -32,7 +32,7 @@ router.get('/:id', async (req, res) => {
 })
 
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', tokenCheck, async (req, res) => {
     try {
          const id = parseInt(req.params.id, 10)
          const deletedBook = req.body;
