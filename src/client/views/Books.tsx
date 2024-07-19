@@ -27,11 +27,11 @@ const Books = (props: BooksProps) => {
                             <h1 className='d-flex justify-content-center align-items-center'>
                                 {book.title}
                             </h1>
-                            <h4 className='font-italic d-flex justify-content-center'>Price: ${book.price}
+                            <h4 className='d-flex justify-content-center'>Price: ${book.price}
                             </h4>
                             </div>
                             <div className='d-flex justify-content-center pb-3'>
-                                <Link to={`/books/${book.id}`} className='btn btn-md btn-lightblue'>Details</Link>
+                                <Link to={`/books/${book.id}`} className='btn btn-md btn-dark'>Details</Link>
                             </div>
                         </div>
                         ))}
