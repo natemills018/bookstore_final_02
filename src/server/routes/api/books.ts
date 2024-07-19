@@ -67,7 +67,7 @@ router.post('/', async(req, res) => {
         const results = await db.books.addBook({ title, price, author, category_id})
     
         res.status(201).json({ message: 'Yes! We added your book!', id: results.insertId})
-        console.log(results)
+        console.log(results);
     } catch (error) {
         console.log(error)
         res.status(500).json({message: 'Internal Server error, could not add book', error})
