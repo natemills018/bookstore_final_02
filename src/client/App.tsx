@@ -5,6 +5,10 @@ import Home from "./views/Home";
 import Books from "./views/Books";
 import NavBar from "./components/NavBar";
 import BookDetails from "./components/BookDetails";
+import AddBook from "./views/AddBook";
+import Categories from "./views/Categories";
+import Login from "./views/Login";
+import Register from "./views/Register";
 
 interface AppProps {}
 
@@ -26,6 +30,24 @@ const App = (props: AppProps) => {
          path="/books/:id"
          element={<BookDetails />} 
          />
+         <Route
+         path="/books/new"
+         element={<AddBook />} 
+         />
+         <Route
+         path="/categories"
+         element={<Categories/>}
+         />
+         <Route 
+         path="/login"
+         element={<Login />}/>
+
+         <Route 
+         path="/register"
+         element={<Register />}
+         />
+
+
       </Routes>
     </BrowserRouter>
   );
